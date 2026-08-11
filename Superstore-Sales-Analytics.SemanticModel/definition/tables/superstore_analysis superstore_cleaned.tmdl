@@ -1,0 +1,135 @@
+table 'superstore_analysis superstore_cleaned'
+	lineageTag: 03227bda-fbcc-41c4-86c1-0c3a4b4a4cc6
+
+	measure 'Profit Margin %' =
+			
+			DIVIDE(
+			    SUM('superstore_analysis superstore_cleaned'[Profit]),
+			    SUM('superstore_analysis superstore_cleaned'[Sales])
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 43a6620d-2329-406e-b941-cf340d881b2c
+
+	column 'Ship Mode'
+		dataType: string
+		lineageTag: 65be8abd-d2e5-42a0-a5d7-332ab27fe77c
+		summarizeBy: none
+		sourceColumn: Ship Mode
+
+		annotation SummarizationSetBy = Automatic
+
+	column Segment
+		dataType: string
+		lineageTag: 6864550e-c457-4aa3-9e72-80d74a1eb4d8
+		summarizeBy: none
+		sourceColumn: Segment
+
+		annotation SummarizationSetBy = Automatic
+
+	column Country
+		dataType: string
+		lineageTag: 2e0cf4df-e9e8-403c-b876-32697ca09169
+		summarizeBy: none
+		sourceColumn: Country
+
+		annotation SummarizationSetBy = Automatic
+
+	column City
+		dataType: string
+		lineageTag: 8bb13418-ac2b-43bf-b578-746099fd0be6
+		summarizeBy: none
+		sourceColumn: City
+
+		annotation SummarizationSetBy = Automatic
+
+	column State
+		dataType: string
+		lineageTag: c882fa58-431e-4028-9797-d53238f60166
+		summarizeBy: none
+		sourceColumn: State
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Postal Code'
+		dataType: int64
+		formatString: 0
+		lineageTag: 1ae76c29-1b7c-418e-8850-3cb4bf315487
+		summarizeBy: count
+		sourceColumn: Postal Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column Region
+		dataType: string
+		lineageTag: 965b8373-8536-4717-92ac-9debeca794a1
+		summarizeBy: none
+		sourceColumn: Region
+
+		annotation SummarizationSetBy = Automatic
+
+	column Category
+		dataType: string
+		lineageTag: deda60e9-d1ab-4de8-b842-d92abd76a6d5
+		summarizeBy: none
+		sourceColumn: Category
+
+		annotation SummarizationSetBy = Automatic
+
+	column Sub-Category
+		dataType: string
+		lineageTag: d4fcc708-4aeb-4bfc-937d-89a170892480
+		summarizeBy: none
+		sourceColumn: Sub-Category
+
+		annotation SummarizationSetBy = Automatic
+
+	column Sales
+		dataType: double
+		lineageTag: ce885f99-a508-4f2b-9148-dbe8f224fbb6
+		summarizeBy: sum
+		sourceColumn: Sales
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Quantity
+		dataType: int64
+		formatString: 0
+		lineageTag: 1697d383-13b5-4e90-8f79-ec1ce92ce993
+		summarizeBy: sum
+		sourceColumn: Quantity
+
+		annotation SummarizationSetBy = Automatic
+
+	column Discount
+		dataType: double
+		lineageTag: 195c84ac-b4ec-47b9-b425-b4b16f2acecf
+		summarizeBy: sum
+		sourceColumn: Discount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Profit
+		dataType: double
+		lineageTag: 7eaf2007-e9ab-42eb-8930-270aee6b90b7
+		summarizeBy: sum
+		sourceColumn: Profit
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition 'superstore_analysis superstore_cleaned' = m
+		mode: import
+		source =
+				let
+				    Source = MySQL.Database("localhost:3306", "superstore_analysis", [ReturnSingleDatabase=true]),
+				    superstore_analysis_superstore_cleaned = Source{[Schema="superstore_analysis",Item="superstore_cleaned"]}[Data]
+				in
+				    superstore_analysis_superstore_cleaned
+
+	annotation PBI_ResultType = Table
+

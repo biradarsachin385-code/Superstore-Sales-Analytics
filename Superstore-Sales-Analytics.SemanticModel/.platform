@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "Superstore-Sales-Analytics"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "06f345b5-ef25-4e91-b295-98dafcc1c454"
+  }
+}
